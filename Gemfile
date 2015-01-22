@@ -1,8 +1,10 @@
+ruby "2.0.0"
 source 'https://rubygems.org'
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 ruby '2.0.0'
+gem 'inherited_resources', github: 'josevalim/inherited_resources', branch: 'rails-4-2'
 gem 'rails', '4.2.0'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
@@ -47,7 +49,18 @@ end
 
 gem 'squeel'
 gem 'bootstrap-will_paginate'
-gem 'inherited_resources'
 gem 'rolify'
-gem 'has_scope'
 gem 'foreman'
+gem 'bootstrap-sass'
+gem 'figaro'
+gem 'high_voltage'
+gem 'simple_form', '>= 3.0.0.rc'
+gem 'unicorn'
+
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller', :platforms=>[:mri_19, :rbx]
+  gem 'hub', :require=>nil
+  gem 'quiet_assets'
+end
+
