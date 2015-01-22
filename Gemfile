@@ -106,3 +106,17 @@ group :development do
   gem 'quiet_assets'
 end
 
+
+gem 'bootstrap-sass'
+gem 'figaro'
+gem 'high_voltage'
+gem 'simple_form', '>= 3.0.0.rc'
+gem 'unicorn'
+
+group :development do
+  gem 'better_errors'
+  gem 'binding_of_caller', :platforms=>[:mri_19, :rbx]
+  gem 'hub', :require=>nil
+  gem 'quiet_assets'
+end
+
