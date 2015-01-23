@@ -1,9 +1,11 @@
 Rails.application.routes.draw do
+  resources :posts
+
   resources :orphans
 
   devise_for :users
 
-  root "orphans#index"
+  root "posts#index"
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

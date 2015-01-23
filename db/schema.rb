@@ -11,16 +11,35 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150123001231) do
+ActiveRecord::Schema.define(version: 20150123022212) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assigned_posts", force: :cascade do |t|
+    t.integer  "orphan_id"
+    t.integer  "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "assigned_posts", ["orphan_id"], name: "index_assigned_posts_on_orphan_id", using: :btree
+  add_index "assigned_posts", ["post_id"], name: "index_assigned_posts_on_post_id", using: :btree
 
   create_table "orphans", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "posts", force: :cascade do |t|
+    t.string   "tweet_id_str"
+    t.string   "body"
+    t.string   "photo_url"
+    t.datetime "tweet_created_at"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "roles", force: :cascade do |t|
@@ -59,4 +78,6 @@ ActiveRecord::Schema.define(version: 20150123001231) do
 
   add_index "users_roles", ["user_id", "role_id"], name: "index_users_roles_on_user_id_and_role_id", using: :btree
 
+  add_foreign_key "assigned_posts", "orphans"
+  add_foreign_key "assigned_posts", "posts"
 end
