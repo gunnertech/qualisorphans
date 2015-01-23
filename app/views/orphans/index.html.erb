@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Orphans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>First name</th>
+      <th>Last name</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @orphans.each do |orphan| %>
+      <tr>
+        <td><%= orphan.first_name %></td>
+        <td><%= orphan.last_name %></td>
+        <td><%= link_to 'Show', orphan %></td>
+        <td><%= link_to 'Edit', edit_orphan_path(orphan) %></td>
+        <td><%= link_to 'Destroy', orphan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Orphan', new_orphan_path %>
