@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150123022212) do
+ActiveRecord::Schema.define(version: 20150124021151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,9 +29,15 @@ ActiveRecord::Schema.define(version: 20150123022212) do
   create_table "orphans", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "hashtag"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.string   "avatar"
+    t.string   "photo"
+    t.text     "description"
   end
+
+  add_index "orphans", ["hashtag"], name: "index_orphans_on_hashtag", unique: true, using: :btree
 
   create_table "posts", force: :cascade do |t|
     t.string   "tweet_id_str"
@@ -41,6 +47,8 @@ ActiveRecord::Schema.define(version: 20150123022212) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
   end
+
+  add_index "posts", ["tweet_id_str"], name: "index_posts_on_tweet_id_str", unique: true, using: :btree
 
   create_table "roles", force: :cascade do |t|
     t.string   "name"

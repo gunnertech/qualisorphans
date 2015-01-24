@@ -1,7 +1,10 @@
 ruby "2.2.0"
 source 'https://rubygems.org'
 
-
+gem 'carrierwave'
+gem "fog"
+gem "mini_magick"
+gem 'twitter'
 gem 'pg'
 gem 'inherited_resources', github: 'josevalim/inherited_resources', branch: 'rails-4-2'
 gem 'rails', '4.2.0'
@@ -46,7 +49,7 @@ group :development, :test do
 end
 
 gem 'devise'
-gem 'squeel'
+gem 'squeel', github: 'danielrhodes/squeel'
 gem 'bootstrap-will_paginate'
 gem 'rolify'
 gem 'foreman'

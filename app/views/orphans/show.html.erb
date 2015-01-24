@@ -1,14 +1,4 @@
-<p id="notice"><%= notice %></p>
 
-<p>
-  <strong>First name:</strong>
-  <%= @orphan.first_name %>
-</p>
+<h1><%= @orphan %></h1>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @orphan.last_name %>
-</p>
-
-<%= link_to 'Edit', edit_orphan_path(@orphan) %> |
-<%= link_to 'Back', orphans_path %>
+<%= image_tag @orphan.avatar.square.url %>

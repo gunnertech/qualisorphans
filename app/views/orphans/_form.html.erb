@@ -1,12 +1,15 @@
-<%= simple_form_for(@orphan) do |f| %>
-  <%= f.error_notification %>
+<div class="row">
+  <div class="col-xs-12">
+    <%= simple_form_for(@orphan, html: { class: 'form-horizontal' }) do |f| %>
 
-  <div class="form-inputs">
-    <%= f.input :first_name %>
-    <%= f.input :last_name %>
+      <%= f.input :first_name, label_html: {class: "control-label "} %>
+      <%= f.input :last_name %>
+      <%= f.input :hashtag %>
+      <%= f.input :description %>
+     
+      <%= f.input :avatar, as: :file %>
+      <%= f.input :photo, as: :file %>
+      <%= f.button :submit %>
+    <% end %>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
-<% end %>
+</div>

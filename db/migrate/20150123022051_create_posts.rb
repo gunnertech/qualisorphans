@@ -8,5 +8,7 @@ class CreatePosts < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+
+    add_index :posts, :tweet_id_str, unique: true
   end
 end
