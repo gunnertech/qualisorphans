@@ -2,15 +2,18 @@ class SubscriptionsController < InheritedResources::Base
   belongs_to :orphan
   
   def create
-    @subscription = parent.subscriptions.build
-    @subscription.user = current_user
+    @subscription = parent.subscriptions.build(post_params)
+    @subscription.user = User.first#current_user
     
-    create!
+    create!(notice: "Thank you for your support!") { parent_url }
   end
   
   private
 
-    def post_params
-      params.require(:subscription).permit(:tweet_id_str, :body, :photo_url, :tweet_created_at)
-    end
+  def post_params
+    params.require(:subscription).permit(account: [:first_name, :last_name, :email, 
+      billing_info: [:number, :month, :year],
+      address: [:address1, :address2, :city, :state, :zip],
+    ])
+  end
 end

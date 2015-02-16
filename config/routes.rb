@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   resources :posts
 
-  resources :orphans
+  resources :orphans do
+    resources :subscriptions
+  end
 
   devise_for :users
 

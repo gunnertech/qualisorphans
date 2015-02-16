@@ -17,6 +17,28 @@ class User < ActiveRecord::Base
     "recurly_#{id.to_s}"
   end
   
+  def find_or_create_account(params)
+    params[:account_code] = account_id
+    params[:billing_info] ||= {}
+    params[:address] ||= {}
+    params[:address][:country] = "US"
+    
+    [:first_name, :last_name].each do |key|
+      params[:billing_info][key] = params[key]
+    end
+    
+    params[:address].each do |key, value|
+      params[:billing_info][key] = value
+    end
+    
+    account || create_account(params)
+  end
+  
+  def create_account(params)
+    Recurly::Account.create(params)
+    params
+  end
+  
   def account=
     params = {}
     

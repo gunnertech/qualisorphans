@@ -38,4 +38,10 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+  
+  logger = Logger.new(STDOUT)
+  logger = ActiveSupport::TaggedLogging.new(logger) if defined?(ActiveSupport::TaggedLogging)
+  config.logger = logger
+  log_level_env_override = Logger.const_get(ENV['LOG_LEVEL'].try(:upcase)) rescue nil
+  config.logger.level = log_level_env_override || Logger.const_get(Rails.configuration.log_level.to_s.upcase)
 end

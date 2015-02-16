@@ -1,4 +1,158 @@
+<div class="row">
+  <div class="col-md-3">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= image_tag resource.avatar.square.url, class: "img-responsive img-rounded" %>
+      </div>
+    </div>
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">About <%= @orphan.first_name %></h3>
+      </div>
+      <div class="panel-body">
+        <%= simple_format @orphan.description %>
+        
+        <a href="" class="btn btn-block btn-primary" data-toggle = "modal" data-target = "#subscription-modal">Sponsor</a>
+        <%= link_to "Edit", edit_orphan_path(resource), class: "btn btn-block btn-primary" %>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-9">
+    <div class="panel panel-default">
+      <div class="panel-body">
 
-<h1><%= @orphan %></h1>
 
-<%= image_tag @orphan.avatar.square.url %>
+        <div class="page-header">
+          <h1>The Latest from <%= @orphan %></h1>
+        </div>
+    
+        <% @orphan.posts.each do |post| %>
+          <div class="row post">
+            <div class="col-xs-1">
+              <% if post.orphans.present? %>
+                <%= image_tag post.orphans.first.avatar.square.url, class: "img-responsive img-rounded" %>
+              <% end %>
+            </div>
+            <div class="col-xs-11">
+            
+              <% if post.orphans.present? %>
+                <h5>
+                  <%= post.orphans.map{|orphan| link_to(orphan, orphan) }.join('&amp;').html_safe %>
+                  <small>&nbsp;·&nbsp;<%= time_ago_in_words(post.tweet_created_at) %></small>
+                </h5> 
+              <% else %>
+                <h5>
+                  Shelter of Love
+                  <small>&nbsp;·&nbsp;<%= time_ago_in_words(post.tweet_created_at) %></small>
+                </h5> 
+              <% end %>
+            
+              <p class="lead"><%= post.body %></p>
+          
+          
+              <% if post.photo_url %>
+                <img class="img-responsive" src="<%= post.photo_url %>">  
+              <% end %>
+                
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="modal fade" id="subscription-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Sponsor <%= @orphan %></h4>
+      </div>
+      <div class="modal-body">
+        <p>For just $10 a month, you can etc, etc, etc.</p>
+        
+        <%= form_tag("/orphans/#{resource.id}/subscriptions", method: "post") do %>
+          <div class="form-group">
+            <label for="subscription_account_first_name">First Name</label>
+            <input name="subscription[account][first_name]" type="text" class="form-control" id="subscription_account_first_name" placeholder="Enter first name" value="<%= current_user.try(:first_name) %>">
+          </div>
+          <div class="form-group">
+            <label for="subscription_account_last_name">Last Name</label>
+            <input name="subscription[account][last_name]" type="text" class="form-control" id="subscription_account_last_name" placeholder="Enter last name" value="<%= current_user.try(:last_name) %>">
+          </div>
+          
+          <div class="form-group">
+            <label for="subscription_account_email">Email address</label>
+            <input name="subscription[account][email]" type="email" class="form-control" id="subscription_account_email" placeholder="Enter email" value="<%= current_user.try(:email) %>">
+          </div>
+          
+          <div class="form-group">
+            <label for="subscription_account_address1">Address 1</label>
+            <input name="subscription[account][address][address1]" type="text" class="form-control" id="subscription_account_address1" placeholder="Enter Address">
+          </div>
+          
+          <div class="form-group">
+            <label for="subscription_account_address2">Address Con't</label>
+            <input name="subscription[account][address][address2]" type="text" class="form-control" id="subscription_account_address2" placeholder="Enter Address">
+          </div>
+          
+          <div class="form-group">
+            <label for="subscription_account_city">City</label>
+            <input name="subscription[account][address][city]" type="text" class="form-control" id="subscription_account_city" placeholder="Enter City">
+          </div>
+          
+          <div class="form-group">
+            <label for="subscription_account_state">State</label>
+            <input name="subscription[account][address][state]" type="text" class="form-control" id="subscription_account_state" placeholder="Enter State">
+          </div>
+          
+          <div class="form-group">
+            <label for="subscription_account_zip">Zip</label>
+            <input name="subscription[account][address][zip]" type="text" class="form-control" id="subscription_account_zip" placeholder="Enter Zip">
+          </div>
+          
+          <div class="form-group">
+            <label for="exampleInputEmail1">Credit Card #</label>
+            <input name="subscription[account][billing_info][number]" type="text" class="form-control" id="subscription_account_billing_info_number" placeholder="Enter credit card">
+          </div>
+          
+          <div class="form-group">
+            <label for="exampleInputEmail1">Expiration Date</label>
+            <div class="row">
+              <div class="col-xs-2">
+                <select name="subscription[account][billing_info][month]" id="subscription_account_billing_info_month" class="form-control">
+                  <% (1..12).to_a.each do |month| %>
+                    <option value="<%= month %>"><%= month %></option>
+                  <% end %>
+                </select>
+              </div>
+              <div class="col-xs-3">
+                <select name="subscription[account][billing_info][year]" id="subscription_account_billing_info_year" class="form-control">
+                  <% (Time.now.year..Time.now.year+20).to_a.each do |year| %>
+                    <option value="<%= year %>"><%= year %></option>
+                  <% end %>
+                </select>
+              </div>
+            </div>
+          </div>
+          
+          
+          
+          <div class="checkbox">
+            <label>
+              <input type="checkbox"> Accept?
+            </label>
+          </div>
+        <% end %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="faux-submit btn btn-primary">Sponsor</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

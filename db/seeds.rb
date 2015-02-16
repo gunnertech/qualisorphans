@@ -28,17 +28,3 @@ if shelter_of_love.twitter_account.nil?
 
   twitter_account.save
 end
-
-plan = Recurly::Plan.find('child') rescue nil
-
-plan ||= Recurly::Plan.create(
-  :plan_code            => 'child',
-  :name                 => 'Sponsor a Child',
-  :unit_amount_in_cents => { 'USD' => 10_00, 'EUR' => 8_00 },
-  :setup_fee_in_cents   => { 'USD' => 60_00, 'EUR' => 45_00 },
-  :plan_interval_length => 1,
-  :plan_interval_unit   => 'months',
-  :tax_exempt           => true
-)
-
-puts plan

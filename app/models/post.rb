@@ -41,8 +41,8 @@ class Post < ActiveRecord::Base
             orphan.posts << post unless orphan.nil?
 
             post.body = post.body.gsub(/##{hashtag.text}/, '').squish
-            post.save
-            post.reload
+            post.reload if post.save
+            
             
           end
         end
