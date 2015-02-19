@@ -11,6 +11,8 @@ class Orphan < ActiveRecord::Base
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :hashtag, presence: true, uniqueness: true
+  
+  before_validation :set_hashtag, if: Proc.new { |o| o.hashtag.blank? }
 
   mount_uploader :avatar, AvatarUploader
   mount_uploader :photo, PhotoUploader
@@ -41,6 +43,10 @@ class Orphan < ActiveRecord::Base
       :plan_interval_unit   => 'months',
       :tax_exempt           => true
     )
+  end
+  
+  def set_hashtag
+    self.hashtag = "#{first_name}#{last_name}".gsub(/(\W|\d)/, "")
   end
 
 end

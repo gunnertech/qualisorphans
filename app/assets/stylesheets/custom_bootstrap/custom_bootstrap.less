@@ -55,7 +55,9 @@
 @import "twitter/bootstrap/utilities.less";
 @import "twitter/bootstrap/responsive-utilities.less";
 
-
+body {
+  background-color: #f5f8fa !important;
+}
 
 .post {
 
@@ -67,4 +69,65 @@
 	margin-bottom: @padding-large-vertical;  
   }
 
+}
+
+.full-width-header {
+  margin-top: @padding-large-vertical * 5;
+}
+
+.sidebar {
+  margin-top: @padding-large-vertical * 2;
+  .avatar {
+    margin-top: @padding-large-vertical * -4;
+  }
+  
+  h2 {
+    margin-top: @padding-large-vertical * -1;
+  }
+  
+  .panel-default {
+    margin-top: @padding-large-vertical * 2;
+  }
+}
+
+
+
+@media (min-width: @screen-sm-min) {
+  
+}
+
+@media (min-width: @screen-md-min) {
+  body {
+    padding-top: @padding-large-vertical * 7;
+  }
+  
+  .full-width-header {
+    margin-top: @padding-large-vertical * -2;
+  }
+  
+  
+  .sidebar {
+    margin-top: 0;
+    .avatar {
+      margin-top: @padding-large-vertical * -18;
+    }
+    
+    h2 {
+      margin-top: @padding-large-vertical;
+    }
+  }
+  
+  .content {
+    margin-top: @padding-large-vertical * 2;
+  }
+  
+  
+}
+
+@media (min-width: @screen-lg-min) {
+  .sidebar {
+    .avatar {
+      margin-top: @padding-large-vertical * -24;
+    }    
+  }
 }

@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   resources :posts
 
+  resources :organizations
+  
   resources :orphans do
     resources :subscriptions
   end
