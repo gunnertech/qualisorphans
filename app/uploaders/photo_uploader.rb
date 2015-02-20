@@ -20,12 +20,8 @@ class PhotoUploader < CarrierWave::Uploader::Base
   def default_url
     "#{ENV['HOST']}/images/fallback/photos/" + [version_name, "default.png"].compact.join('_')
   end
-
-  version :large do
-    # process :resize_to_fill => [1280,860]
-    # process :resize_to_limit => [1280,860]
-    process :resize_to_fill => [900,900]
-  end
+  
+  process :resize_to_fill => [1500,500]
   
   # version :square do
   #   process :resize_to_fill => [900,900]

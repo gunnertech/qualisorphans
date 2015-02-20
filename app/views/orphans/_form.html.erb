@@ -1,15 +1,27 @@
 <div class="row">
   <div class="col-xs-12">
-    <%= simple_form_for(@orphan, html: { class: 'form-horizontal' }) do |f| %>
+    <%= simple_form_for(@orphan, html: { class: 'form-horizontal' },
+      wrapper: :horizontal_form,
+      wrapper_mappings: {
+        check_boxes: :horizontal_radio_and_checkboxes,
+        radio_buttons: :horizontal_radio_and_checkboxes,
+        file: :horizontal_file_input,
+        boolean: :horizontal_boolean
+      }) do |f| %>
 
-      <%= f.input :first_name, label_html: {class: "control-label "} %>
+      <%= f.input :first_name %>
       <%= f.input :last_name %>
       <%= f.input :hashtag %>
       <%= f.input :description %>
      
-      <%= f.input :avatar, as: :file %>
-      <%= f.input :photo, as: :file %>
-      <%= f.button :submit %>
+      <%= f.input :avatar, as: :file, hint: "Will be cropped square" %>
+      <%= f.input :photo, as: :file, hint: "Will be cropped to 1500x500" %>
+      
+      <div class="row">
+        <div class="col-sm-offset-3 col-sm-9">
+          <%= f.button :submit, class: 'btn btn-block btn-info' %>
+        </div>
+      </div>
     <% end %>
   </div>
 </div>

@@ -1,0 +1,36 @@
+<h1 class="page-header">Manage Users</h1>
+
+
+<div class="row">
+  <div class="col-xs-12">
+    <%= simple_form_for(@organization, html: { class: 'form-inline add-user-form' }, wrapper: :inline_form ) do |f| %>
+      <%= f.input :email_to_add, input_html: {placeholder: "Type email..."}, label_html: {class: 'sr-only'} %>
+      
+      <%= f.button :submit, "Add User", class: 'btn btn-info'  %>
+    <% end %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12">
+
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <tbody>
+          <% @users.each do |user| %>
+            <% unless user.has_role?("admin") %>
+              <tr>
+                <td>
+                  <%= user.email %>
+                </td>
+                <td>
+                  <%= link_to "Remove", [@organization, user], class: "btn btn-xs btn-danger", data: {method: "delete", confirm: "Are you sure?"} %>
+                </td>
+              </tr>
+            <% end %>
+          <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+<h2>Account Info</h2>
+
+<div class="row">
+  <div class="col-xs-12">
+    <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'form-horizontal', method: :put },
+    wrapper: :horizontal_form,
+            wrapper_mappings: {
+              check_boxes: :horizontal_radio_and_checkboxes,
+              radio_buttons: :horizontal_radio_and_checkboxes,
+              file: :horizontal_file_input,
+              boolean: :horizontal_boolean
+            }) do |f| %>
+
+      <%= f.input :email, required: true, autofocus: true %>
+
+      <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+        <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+      <% end %>
+
+      <%= f.input :password, autocomplete: "off", hint: "leave it blank if you don't want to change it", required: false %>
+      <%= f.input :password_confirmation, required: false %>
+      <%= f.input :current_password, hint: "we need your current password to confirm your changes", required: true %>
+      <div class="row">
+        <div class="col-sm-offset-3 col-sm-9">
+          <%= f.button :submit, "Update", class: 'btn btn-block btn-info' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<h2>Sponsorships</h2>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <tbody>
+      <% current_user.subscriptions.each do |subscription| %>
+        <tr>
+          <td>
+            <%= link_to subscription.orphan, subscription.orphan %>
+          </td>
+          <td>
+            <%= subscription.created_at.strftime("%m/%d/%Y") %>
+          </td>
+          <td>
+            <%= link_to "Cancel", [subscription.orphan, subscription], class: "btn btn-xs btn-danger", data: {method: "delete", confirm: "Are you sure?"} %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<!-- <h3>Cancel my account</h3>
+
+<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p> -->

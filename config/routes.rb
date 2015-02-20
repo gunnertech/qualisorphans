@@ -1,7 +1,10 @@
 Rails.application.routes.draw do
   resources :posts
 
-  resources :organizations
+  resources :organizations do
+    resources :twitter_accounts
+    resources :users
+  end
   
   resources :orphans do
     resources :subscriptions

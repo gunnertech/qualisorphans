@@ -4,9 +4,12 @@
 
 <% content_for(:full_width) do %>
   <div class="full-width-header">
-    <%#= image_tag @organization.photo.url, class: "img-responsive" %>
-    <%= image_tag "http://i.imgur.com/7dVKKmy.jpg", class: "img-responsive" %>
+    <%= image_tag @organization.photo.url, class: "img-responsive" %>
   </div>
+<% end %>
+
+<% content_for(:flash_messages) do %>
+  NO
 <% end %>
 
 
@@ -14,18 +17,24 @@
   <div class="col-md-3 sidebar">
     
     <div class="row">
-      <div class="col-xs-3 col-md-12"><%= image_tag "http://i.imgur.com/YUYQHLq.jpg", class: "img-responsive thumbnail avatar" %></div>
+      <div class="col-xs-3 col-md-12"><%= image_tag @organization.avatar.square.url, class: "img-responsive thumbnail avatar" %></div>
       <div class="col-xs-9 col-md-12"><h2><%= @organization %></h2></div>
     </div>
     
-    <p>A brief description of the organization goes here, including where it's located and what it does.</p>
+    <%= simple_format (@organization.description||"") %>
     
     <ul class="fa-ul">
-      <li><i class="fa-li fa fa-map-marker"></i>Cambodia</li>
-      <li><i class="fa-li fa fa-link"></i><%= link_to @organization.url || "shelteroflove.com", @organization.url || "http://shelteroflove.com/" %></li>
+      <% if @organization.location.present? %>
+        <li><i class="fa-li fa fa-map-marker"></i><%= @organization.location %></li>
+      <% end %>
+      <% if @organization.url.present? %>
+        <li><i class="fa-li fa fa-link"></i><%= link_to @organization.url.gsub(/https?:\/\//,""), @organization.url %></li>
+      <% end %>
     </ul>
     
-    <%= link_to "<i class=\"fa fa-pencil fa-lg\"></i> Edit".html_safe, edit_organization_path(@organization), class: "btn btn-block btn-primary" %>
+    <% if can? :update, @organization %>
+      <%= link_to "<i class=\"fa fa-pencil fa-lg\"></i> Edit".html_safe, edit_organization_path(@organization), class: "btn btn-block btn-primary" %>
+    <% end %>
     
     
 
@@ -42,7 +51,7 @@
               </div>
               <div class="media-body">
                 <h4 class="media-heading"><%= link_to orphan, orphan %></h4>
-                <%= simple_format orphan.description %>
+                <%= simple_format (orphan.description||"") %>
               </div>
             </li>  
           <% end %>
@@ -53,6 +62,9 @@
   </div>
 
   <div class="col-md-9 content">
+    
+    <%= flash_messages %>
+    
     <div class="panel panel-default">
       <div class="panel-body">
 

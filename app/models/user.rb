@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  rolify
+  rolify after_add: :touch_self, after_remove: :touch_self
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -15,6 +15,10 @@ class User < ActiveRecord::Base
   
   def account_id
     "recurly_#{id.to_s}"
+  end
+  
+  def subscription_for(orphan)
+    subscriptions.where{ orphan_id == my{ orphan.id }}.first
   end
   
   def find_or_create_account(params)
@@ -51,5 +55,9 @@ class User < ActiveRecord::Base
       Recurly::Account.create(params)
     end
     
+  end
+  
+  def touch_self(role)
+    self.touch
   end
 end

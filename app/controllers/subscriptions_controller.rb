@@ -8,6 +8,10 @@ class SubscriptionsController < InheritedResources::Base
     create!(notice: "Thank you for your support!") { parent_url }
   end
   
+  def destroy
+    destroy!(notice: "Sponsorship Cancelled") { edit_user_registration_url }
+  end
+  
   private
 
   def post_params
