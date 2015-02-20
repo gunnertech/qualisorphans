@@ -31,10 +31,10 @@ module Qualisorphans
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
     config.active_job.queue_adapter = :delayed_job
-    # config.after_initialize do
-    #   Organization.all.each do |organization|
-    #     PostsFetchJob.perform_later(organization)
-    #   end
-    # end
+    config.after_initialize do
+      Organization.all.each do |organization|
+        PostsFetchJob.perform_later(organization)
+      end
+    end
   end
 end
