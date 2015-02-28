@@ -19,9 +19,9 @@ class Ability
       if !user.new_record?
         organization_ids = Organization.with_role("admin", user).empty? ? [] : Organization.with_role("admin", user).pluck("id")
         subscription_ids = user.subscriptions.empty? ? [] : user.subscriptions.pluck("id")
-        can :manage, :organization, id: organization_ids.empty? ? [0] : organization_ids
-        can :manage, :subscription, id: subscription_ids.empty? ? [0] : subscription_ids
+        can :manage, :organization, id: (organization_ids.empty? ? [0] : organization_ids)
         can :create, Subscription        
+        can :manage, :subscription, id: (subscription_ids.empty? ? [0] : subscription_ids)
       end
     end
     #
