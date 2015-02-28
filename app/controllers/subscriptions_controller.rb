@@ -4,7 +4,7 @@ class SubscriptionsController < InheritedResources::Base
   
   def create
     @subscription = parent.subscriptions.build(post_params)
-    @subscription.user = User.first#current_user
+    @subscription.user = current_user
     
     create!(notice: "Thank you for your support!") { parent_url }
   end
