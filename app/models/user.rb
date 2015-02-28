@@ -21,6 +21,10 @@ class User < ActiveRecord::Base
     subscriptions.where{ orphan_id == my{ orphan.id }}.first
   end
   
+  def is_sponsoring?(orphan)
+    orphans.include?(orphan)
+  end
+  
   def find_or_create_account(params)
     params[:account_code] = account_id
     params[:billing_info] ||= {}
