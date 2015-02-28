@@ -1,4 +1,5 @@
 class SubscriptionsController < InheritedResources::Base
+  skip_load_and_authorize_resource
   belongs_to :orphan
   
   def create
