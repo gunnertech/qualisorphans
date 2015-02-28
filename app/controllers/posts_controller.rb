@@ -9,5 +9,11 @@ class PostsController < InheritedResources::Base
     def begin_of_association_chain
       @organization
     end
+    
+    def collection
+      @posts = end_of_association_chain
+      
+      @posts = @posts.reorder{ id.desc }
+    end
 end
 
