@@ -16,7 +16,7 @@ class SubscriptionsController < InheritedResources::Base
   private
 
   def post_params
-    params.require(:subscription).permit(account: [:first_name, :last_name, :email, 
+    params.require(:subscription).permit(:subscription_type, account: [:first_name, :last_name, :email, 
       billing_info: [:number, :month, :year],
       address: [:address1, :address2, :city, :state, :zip],
     ])

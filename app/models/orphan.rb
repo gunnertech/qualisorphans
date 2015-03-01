@@ -18,6 +18,7 @@ class Orphan < ActiveRecord::Base
   mount_uploader :photo, PhotoUploader
   
   after_save :create_recurly_plan
+  after_save :create_full_recurly_plan
 
   def to_s
     "#{first_name} #{last_name}".squish
@@ -27,8 +28,16 @@ class Orphan < ActiveRecord::Base
     "child_sponsorship_#{id}"
   end
   
+  def full_plan_id
+    "child_full_sponsorship_#{id}"
+  end
+  
   def recurly_plan
     Recurly::Plan.find(plan_id) rescue nil
+  end
+  
+  def full_recurly_plan
+    Recurly::Plan.find(full_plan_id) rescue nil
   end
   
   def create_recurly_plan
@@ -37,7 +46,21 @@ class Orphan < ActiveRecord::Base
     plan ||= Recurly::Plan.create(
       :plan_code            => plan_id,
       :name                 => "Sponsorship for #{first_name} #{last_name}".squish,
-      :unit_amount_in_cents => { 'USD' => 10_00, 'EUR' => 8_00 },
+      :unit_amount_in_cents => { 'USD' => 34_00, 'EUR' => 8_00 },
+      :setup_fee_in_cents   => { 'USD' => 0, 'EUR' => 0 },
+      :plan_interval_length => 1,
+      :plan_interval_unit   => 'months',
+      :tax_exempt           => true
+    )
+  end
+  
+  def create_full_recurly_plan
+    plan = full_recurly_plan
+
+    plan ||= Recurly::Plan.create(
+      :plan_code            => full_plan_id,
+      :name                 => "Sponsorship for #{first_name} #{last_name}".squish,
+      :unit_amount_in_cents => { 'USD' => 68_00, 'EUR' => 8_00 },
       :setup_fee_in_cents   => { 'USD' => 0, 'EUR' => 0 },
       :plan_interval_length => 1,
       :plan_interval_unit   => 'months',

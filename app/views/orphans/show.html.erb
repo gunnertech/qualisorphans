@@ -104,9 +104,17 @@
         <h4 class="modal-title">Sponsor <%= @orphan %></h4>
       </div>
       <div class="modal-body">
-        <p>For just $10 a month, you can etc, etc, etc.</p>
+        <p>For just a few dollars a month, you can etc, etc, etc.</p>
         
         <%= form_tag("/orphans/#{resource.id}/subscriptions", method: "post") do %>
+          <div class="form-group">
+            <label for="subscription_subscription_type">Subscription Type</label>
+            <select name="subscription[subscription_type]" id="subscription_subscription_type"  class="form-control">
+              <option value="full">Full - $68</option>
+              <option value="partial">Partial - $34</option>
+            </select>
+          </div>
+          
           <div class="form-group">
             <label for="subscription_account_first_name">First Name</label>
             <input name="subscription[account][first_name]" type="text" class="form-control" id="subscription_account_first_name" placeholder="Enter first name" value="<%= current_user.try(:first_name) %>">
