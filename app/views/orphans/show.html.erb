@@ -104,14 +104,15 @@
         <h4 class="modal-title">Sponsor <%= @orphan %></h4>
       </div>
       <div class="modal-body">
-        <p>For just a few dollars a month, you can etc, etc, etc.</p>
+        <p>We foster a direct relationship between you and your sponsored child. There are three levels of sponsorship - at the $34 level, you are providing your child's food each month. At the $68 level, you are providing your child's food and education each month. And, at the full sponsorship level of $200 per month, you are providing your child's food, education, shelter, caretakers, and all other associated costs. Each child may be sponsored by three sponsors or up to $200 per month, which is considered full sponsorship.  Therefore, the children in the directory may already have one or two sponsors but have not yet been fully sponsored</p>
         
         <%= form_tag("/orphans/#{resource.id}/subscriptions", method: "post") do %>
           <div class="form-group">
             <label for="subscription_subscription_type">Subscription Type</label>
             <select name="subscription[subscription_type]" id="subscription_subscription_type"  class="form-control">
-              <option value="full">Full - $68</option>
-              <option value="partial">Partial - $34</option>
+              <option value="maximum">$200 Level</option>
+              <option value="medium">$68 Level</option>
+              <option value="partial">$34 Level</option>
             </select>
           </div>
           
@@ -178,6 +179,17 @@
               </div>
             </div>
           </div>
+          
+          <% if !signed_in? %>
+            <div class="form-group">
+              <label for="password">Account Password</label>
+              <input name="password" type="password" class="form-control" id="password" placeholder="Enter password">
+            </div>
+            <div class="form-group">
+              <label for="password_confirmation">Password Confirmation</label>
+              <input name="password_confirmation" type="password" class="form-control" id="password_confirmation" placeholder="Confirm password">
+            </div>
+          <% end %>
           
           
           

@@ -39,6 +39,9 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
   
+  config.action_mailer.default_url_options = { :host => 'localhost:3033' }
+  config.action_mailer.delivery_method = :sendmail
+  
   logger = Logger.new(STDOUT)
   logger = ActiveSupport::TaggedLogging.new(logger) if defined?(ActiveSupport::TaggedLogging)
   config.logger = logger

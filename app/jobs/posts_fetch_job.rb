@@ -9,6 +9,6 @@ class PostsFetchJob < ActiveJob::Base
   end
   
   def after_perform(job)
-    PostsFetchJob.set(wait: 1.hour).perform_later(job.organization)
+    PostsFetchJob.set(wait: 10.minutes).perform_later(job.organization)
   end
 end

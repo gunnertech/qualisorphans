@@ -4,9 +4,14 @@ class SubscriptionsController < InheritedResources::Base
   
   def create
     @subscription = parent.subscriptions.build(post_params)
-    @subscription.user = current_user
+    @subscription.user = current_user || register_user
     
-    create!(notice: "Thank you for your support!") { parent_url }
+    if @subscription.valid?
+      create!(notice: "Thank you for your support!") { parent_url }
+    else
+      flash[:error] = "Please try again"
+      redirect_to parent_url
+    end
   end
   
   def destroy
@@ -14,6 +19,22 @@ class SubscriptionsController < InheritedResources::Base
   end
   
   private
+  
+  def register_user
+    user = nil
+    email = params[:subscription][:account][:email]
+    password = params.delete(:password)
+    password_confirmation = params.delete(:password_confirmation)
+    
+    if password == password_confirmation
+      user = User.new(email: email, password: password, password_confirmation: password_confirmation)
+      user.save!
+    end
+    
+    sign_in user
+    
+    user
+  end
 
   def post_params
     params.require(:subscription).permit(:subscription_type, account: [:first_name, :last_name, :email, 

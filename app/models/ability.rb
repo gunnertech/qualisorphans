@@ -15,6 +15,7 @@ class Ability
       can :read, Post
       can :read, Organization
       can :read, Orphan
+      can :create, Subscription        
       
       if !user.new_record?
         organization_ids = Organization.with_role("admin", user).empty? ? [] : Organization.with_role("admin", user).pluck("id")

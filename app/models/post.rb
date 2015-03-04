@@ -21,7 +21,8 @@ class Post < ActiveRecord::Base
 
     def fetch_tweets_for(organization)
       #"ShelterOfLoveKH"
-      client_for(organization).user_timeline(organization.twitter_account.username,since_id: (organization.posts.reorder{ id.asc }.first.try(:tweet_id_str) || 1) ).each do |tweet|
+      #,since_id: (organization.posts.reorder{ id.asc }.first.try(:tweet_id_str) || 1) 
+      client_for(organization).user_timeline(organization.twitter_account.username).each do |tweet|
 
         photo_url = tweet.media? ? "#{tweet.media.first.media_url}:large" : nil
         shortened_url = tweet.media? ? tweet.media.first.url.to_s : nil

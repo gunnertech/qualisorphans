@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 gem 'carrierwave'
 gem "fog"
 gem "mini_magick"
-gem 'twitter'
+gem 'twitter', '>= 5.14.0'
 gem 'pg'
 gem 'inherited_resources', github: 'josevalim/inherited_resources', branch: 'rails-4-2'
 gem 'rails', '4.2.0'
