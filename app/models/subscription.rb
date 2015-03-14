@@ -19,7 +19,7 @@ class Subscription < ActiveRecord::Base
     subscription = Recurly::Subscription.create(
       plan_code: (subscription_type == "maximum" ? orphan.maximum_plan_id : (subscription_type == "medium" ? orphan.medium_plan_id : orphan.plan_id)),
       currency: 'USD',
-      :customer_notes: 'Thank you for your support!',
+      customer_notes: 'Thank you for your support!',
       account: user.find_or_create_account(account,organization)
     )
     self.uuid = subscription.uuid
