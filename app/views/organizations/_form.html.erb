@@ -15,6 +15,12 @@
       <%= f.input :email %>
       <%= f.input :location %>
       <%= f.input :description %>
+      
+      <% if current_user.has_role?('admin') %>
+        <%= f.input :recurly_subdomain %>
+        <%= f.input :recurly_api_key %>
+        <%= f.input :recurly_default_currency %>
+      <% end %>
      
       <%= f.input :avatar, as: :file, hint: "Will be cropped square" %>
       <%= f.input :photo, as: :file, hint: "Will be cropped to 1500x500" %>

@@ -26,7 +26,7 @@ class OrganizationsController < InheritedResources::Base
   private
 
     def organization_params
-      params.require(:organization).permit(:domain, :name, :url, :email, :location, :description, :avatar, :photo, :email_to_add)
+      params.require(:organization).permit(:domain, :name, :url, :email, :location, :description, :avatar, :photo, :email_to_add, :recurly_subdomain, :recurly_api_key, :recurly_default_currency)
     end
 end
 
