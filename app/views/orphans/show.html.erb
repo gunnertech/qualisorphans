@@ -61,12 +61,12 @@
     
         <% @orphan.posts.each do |post| %>
           <div class="row post">
-            <div class="col-xs-1">
+            <div class="col-md-1 visible-md-block visible-lg-block">
               <% if post.orphans.present? %>
                 <%= image_tag post.orphans.first.avatar.square.url, class: "img-responsive img-rounded" %>
               <% end %>
             </div>
-            <div class="col-xs-11">
+            <div class="col-md-11 col-xs-12">
             
               <% if post.orphans.present? %>
                 <h5>
