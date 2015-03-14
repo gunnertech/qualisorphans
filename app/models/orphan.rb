@@ -38,20 +38,33 @@ class Orphan < ActiveRecord::Base
   end
   
   def recurly_plan
+    Recurly.subdomain = organization.recurly_subdomain || ENV['RECURLY_SUBDOMAIN']
+    Recurly.api_key = organization.recurly_api_key || ENV['RECURLY_API_KEY']
+    Recurly.default_currency = organization.recurly_default_currency || 'USD'
+    
     Recurly::Plan.find(plan_id) rescue nil
   end
   
   def medium_recurly_plan
+    Recurly.subdomain = organization.recurly_subdomain || ENV['RECURLY_SUBDOMAIN']
+    Recurly.api_key = organization.recurly_api_key || ENV['RECURLY_API_KEY']
+    Recurly.default_currency = organization.recurly_default_currency || 'USD'
     Recurly::Plan.find(medium_plan_id) rescue nil
   end
   
   def maximum_recurly_plan
+    Recurly.subdomain = organization.recurly_subdomain || ENV['RECURLY_SUBDOMAIN']
+    Recurly.api_key = organization.recurly_api_key || ENV['RECURLY_API_KEY']
+    Recurly.default_currency = organization.recurly_default_currency || 'USD'
     Recurly::Plan.find(maximum_plan_id) rescue nil
   end
   
   def create_recurly_plan
     plan = recurly_plan
-
+    
+    Recurly.subdomain = organization.recurly_subdomain || ENV['RECURLY_SUBDOMAIN']
+    Recurly.api_key = organization.recurly_api_key || ENV['RECURLY_API_KEY']
+    Recurly.default_currency = organization.recurly_default_currency || 'USD'
     plan ||= Recurly::Plan.create(
       :plan_code            => plan_id,
       :name                 => "Sponsorship for #{first_name} #{last_name}".squish,
@@ -65,7 +78,9 @@ class Orphan < ActiveRecord::Base
   
   def create_medium_recurly_plan
     plan = medium_recurly_plan
-
+    Recurly.subdomain = organization.recurly_subdomain || ENV['RECURLY_SUBDOMAIN']
+    Recurly.api_key = organization.recurly_api_key || ENV['RECURLY_API_KEY']
+    Recurly.default_currency = organization.recurly_default_currency || 'USD'
     plan ||= Recurly::Plan.create(
       :plan_code            => medium_plan_id,
       :name                 => "Sponsorship for #{first_name} #{last_name}".squish,
@@ -79,7 +94,9 @@ class Orphan < ActiveRecord::Base
   
   def create_maximum_recurly_plan
     plan = maximum_recurly_plan
-
+    Recurly.subdomain = organization.recurly_subdomain || ENV['RECURLY_SUBDOMAIN']
+    Recurly.api_key = organization.recurly_api_key || ENV['RECURLY_API_KEY']
+    Recurly.default_currency = organization.recurly_default_currency || 'USD'
     plan ||= Recurly::Plan.create(
       :plan_code            => maximum_plan_id,
       :name                 => "Sponsorship for #{first_name} #{last_name}".squish,

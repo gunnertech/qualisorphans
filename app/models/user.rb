@@ -9,12 +9,15 @@ class User < ActiveRecord::Base
   has_many :subscriptions
   has_many :orphans, through: :subscriptions
   
-  def account
-    @account ||= Recurly::Account.find(account_id) rescue nil
+  def account(organization)
+    Recurly.subdomain = organization.recurly_subdomain || ENV['RECURLY_SUBDOMAIN']
+    Recurly.api_key = organization.recurly_api_key || ENV['RECURLY_API_KEY']
+    Recurly.default_currency = organization.recurly_default_currency || 'USD'
+    @account ||= Recurly::Account.find(account_id(organization)) rescue nil
   end
   
-  def account_id
-    "recurly_#{id.to_s}"
+  def account_id(organization)
+    "recurly_#{organization.id}_#{id.to_s}"
   end
   
   def subscription_for(orphan)
@@ -25,8 +28,8 @@ class User < ActiveRecord::Base
     orphans.include?(orphan)
   end
   
-  def find_or_create_account(params)
-    params[:account_code] = account_id
+  def find_or_create_account(params,organization)
+    params[:account_code] = account_id(organization)
     params[:billing_info] ||= {}
     params[:address] ||= {}
     params[:address][:country] = "US"
@@ -43,23 +46,29 @@ class User < ActiveRecord::Base
   end
   
   def create_account(params)
+    Recurly.subdomain = organization.recurly_subdomain || ENV['RECURLY_SUBDOMAIN']
+    Recurly.api_key = organization.recurly_api_key || ENV['RECURLY_API_KEY']
+    Recurly.default_currency = organization.recurly_default_currency || 'USD'
     Recurly::Account.create(params)
     params
   end
   
-  def account=
-    params = {}
-    
-    if account.present?
-      params.each do |key, value|
-        account.send("#{key}=",value)
-      end
-      return account
-    else
-      Recurly::Account.create(params)
-    end
-    
-  end
+  # def account=
+  #   params = {}
+  #
+  #   if account.present?
+  #     params.each do |key, value|
+  #       account.send("#{key}=",value)
+  #     end
+  #     return account
+  #   else
+  #     Recurly.subdomain = organization.recurly_subdomain || ENV['RECURLY_SUBDOMAIN']
+  #     Recurly.api_key = organization.recurly_api_key || ENV['RECURLY_API_KEY']
+  #     Recurly.default_currency = organization.recurly_default_currency || 'USD'
+  #     Recurly::Account.create(params)
+  #   end
+  #
+  # end
   
   def touch_self(role)
     self.touch
