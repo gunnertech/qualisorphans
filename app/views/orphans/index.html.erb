@@ -55,7 +55,7 @@
           <% collection.each do |orphan| %>
             <div class="col-md-3 col-xs-6">
               <div class="thumbnail">
-                <%= image_tag orphan.avatar.square.url, class: "img-responsive img-rounded" %>
+                <%= image_tag orphan.avatar.square.url %>
                 <div class="caption">
                   <h3 id="thumbnail-label"><%= link_to orphan, orphan %></h3>
                 </div>
