@@ -6,8 +6,8 @@ class OrphansController < InheritedResources::Base
     params.require(:orphan).permit(:first_name, :last_name, :hashtag, :photo, :avatar, :description)
   end
   
-  def begin_of_association_chain
-    @organization
-  end
+  # def begin_of_association_chain
+  #   @organization
+  # end
 end
 
