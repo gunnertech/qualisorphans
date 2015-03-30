@@ -65,7 +65,7 @@
               
               <% if post.orphans.present? %>
                 <h5>
-                  <%= post.orphans.map{|orphan| link_to(orphan, orphan) }.join('&amp;').html_safe %>
+                  <%= post.orphans.map{|orphan| link_to(orphan, orphan) }.join(' &amp; ').html_safe %>
                   <small>&nbsp;·&nbsp;<%= time_ago_in_words(post.tweet_created_at) %></small>
                 </h5> 
               <% else %>
