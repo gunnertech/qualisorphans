@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
   protect_from_forgery with: :exception
   load_and_authorize_resource unless: :devise_controller?
-  before_filter :set_organization
+  prepend_before_filter :set_organization
   
   protected
   

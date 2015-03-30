@@ -1,29 +1,70 @@
-<p id="notice"><%= notice %></p>
+<% content_for(:title) do %>
+  <%= @organization %>
+<% end %>
 
-<h1>Listing Orphans</h1>
+<% content_for(:full_width) do %>
+  <div class="full-width-header">
+    <%= image_tag @organization.photo.url, class: "img-responsive" %>
+  </div>
+<% end %>
 
-<table>
-  <thead>
-    <tr>
-      <th>First name</th>
-      <th>Last name</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<% content_for(:flash_messages) do %>
+  NO
+<% end %>
 
-  <tbody>
-    <% @orphans.each do |orphan| %>
-      <tr>
-        <td><%= orphan.first_name %></td>
-        <td><%= orphan.last_name %></td>
-        <td><%= link_to 'Show', orphan %></td>
-        <td><%= link_to 'Edit', edit_orphan_path(orphan) %></td>
-        <td><%= link_to 'Destroy', orphan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+
+<div class="row">
+  <div class="col-md-3 sidebar">
+    
+    <div class="row">
+      <div class="col-xs-3 col-md-12"><%= image_tag @organization.avatar.square.url, class: "img-responsive thumbnail avatar" %></div>
+      <div class="col-xs-9 col-md-12"><h2><%= @organization %></h2></div>
+    </div>
+    
+    <%= simple_format (@organization.description||"") %>
+    
+    <ul class="fa-ul">
+      <% if @organization.location.present? %>
+        <li><i class="fa-li fa fa-map-marker"></i><%= @organization.location %></li>
+      <% end %>
+      <% if @organization.url.present? %>
+        <li><i class="fa-li fa fa-link"></i><%= link_to @organization.url.gsub(/https?:\/\//,""), @organization.url %></li>
+      <% end %>
+      <li><i class="fa-li fa fa-home"></i><%= link_to "Home", root_path %></li>
+    </ul>
+    
+    <% if can? :update, @organization %>
+      <%= link_to "<i class=\"fa fa-pencil fa-lg\"></i> Edit".html_safe, edit_organization_path(@organization), class: "btn btn-block btn-primary" %>
     <% end %>
-  </tbody>
-</table>
+    
+  </div>
 
-<br>
+  <div class="col-md-9 content">
+    
+    <%= flash_messages %>
+    
+    <div class="panel panel-default">
+      <div class="panel-body">
 
-<%= link_to 'New Orphan', new_orphan_path %>
+
+        <!-- <div class="page-header">
+          <h1>The Latest from <%= @organization.name %></h1>
+        </div> -->
+        
+        <div class="row">
+          <% collection.each do |orphan| %>
+            <div class="col-md-3 col-xs-6">
+              <div class="thumbnail">
+                <%= image_tag orphan.avatar.square.url, class: "img-responsive img-rounded" %>
+                <div class="caption">
+                  <h3 id="thumbnail-label"><%= link_to orphan, orphan %></h3>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
