@@ -32,7 +32,7 @@ class Post < ActiveRecord::Base
           body: tweet.text.to_s.gsub(/#{shortened_url.to_s}/, '').squish,
           tweet_created_at: tweet.created_at,
           photo_url: photo_url
-        )
+        ) rescue nil
 
         if post && tweet.hashtags?
           tweet.hashtags.each do |hashtag|
