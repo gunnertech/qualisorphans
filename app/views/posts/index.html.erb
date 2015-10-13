@@ -30,7 +30,7 @@
       <% if @organization.url.present? %>
         <li><i class="fa-li fa fa-link"></i><%= link_to @organization.url.gsub(/https?:\/\//,""), @organization.url %></li>
       <% end %>
-      <li><i class="fa-li fa fa-users"></i><%= link_to "Our Orphans", orphans_path %></li>
+      <li><i class="fa-li fa fa-users"></i><%= link_to "Our Children", orphans_path %></li>
     </ul>
     
     <% if can? :update, @organization %>
