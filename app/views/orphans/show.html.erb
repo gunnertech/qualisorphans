@@ -33,7 +33,7 @@
       <% end %>
     </ul>
     
-    <% if false && can?(:create, Subscription) && !can?(:update, current_user.try(:subscription_for,@orphan)) %>
+    <% if can?(:create, Subscription) && !can?(:update, current_user.try(:subscription_for,@orphan)) %>
       <a href="" class="btn btn-block btn-primary" data-toggle="modal" data-target="#subscription-modal"><i class="fa fa-trophy fa-lg"></i> Sponsor</a>
       
     <% end %>
