@@ -42,7 +42,7 @@ class User < ActiveRecord::Base
       params[:billing_info][key] = value
     end
     
-    account || create_account(params)
+    account(organization) || create_account(params)
   end
   
   def create_account(params)
