@@ -42,10 +42,10 @@ class User < ActiveRecord::Base
       params[:billing_info][key] = value
     end
     
-    account(organization) || create_account(params)
+    account(organization) || create_account(params,organization)
   end
   
-  def create_account(params)
+  def create_account(params,organization)
     Recurly.subdomain = organization.recurly_subdomain || ENV['RECURLY_SUBDOMAIN']
     Recurly.api_key = organization.recurly_api_key || ENV['RECURLY_API_KEY']
     Recurly.default_currency = organization.recurly_default_currency || 'USD'
