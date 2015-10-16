@@ -6,6 +6,7 @@ class Subscription < ActiveRecord::Base
   
   before_create :create_recurly_subscription
   after_create :send_thankyou_email
+  before_destroy :cancel_subscription
   
   attr_accessor :account, :subscription_type
   
@@ -27,5 +28,10 @@ class Subscription < ActiveRecord::Base
   
   def send_thankyou_email
     SubscriptionMailer.confirmation_email(user,orphan).deliver_later
+  end
+  
+  def cancel_subscription
+    subscription = Recurly::Subscription.find(uuid)
+    subscription.terminate :none    
   end
 end
