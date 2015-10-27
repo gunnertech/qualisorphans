@@ -217,7 +217,7 @@
         <h4 class="modal-title">Email <%= @orphan %></h4>
       </div>
       <div class="modal-body">        
-        <%= form_tag("/orphans/#{resource.id}/subscriptions", method: "post") do %>
+        <%= form_tag("/orphans/#{resource.id}/subscriptions", method: "post", remote: true) do %>
           <div class="form-group">
             <textarea name="message" class="form-control" id="message" placeholder="Type your message..." rows="10"></textarea>
           </div>
