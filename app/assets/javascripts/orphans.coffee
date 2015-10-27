@@ -5,4 +5,5 @@
 $(document).on("click",".faux-submit", (evt) -> 
   evt.preventDefault()
   $(this).parents(".modal").find("form").trigger("submit")
+  $(this).parents(".modal").modal('toggle')
 )
