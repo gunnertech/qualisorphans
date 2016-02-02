@@ -58,8 +58,8 @@
       </div>
         
       <div class="panel-body">
-    
-        <% @orphan.posts.each do |post| %>
+
+        <% @orphan.posts.reorder{ id.desc }.each do |post| %>
           <div class="row post">
             <div class="col-md-1 visible-md-block visible-lg-block">
               <% if post.orphans.present? %>
