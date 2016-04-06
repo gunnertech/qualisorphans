@@ -68,7 +68,7 @@ class Orphan < ActiveRecord::Base
     plan ||= Recurly::Plan.create(
       :plan_code            => plan_id,
       :name                 => "Sponsorship for #{first_name} #{last_name}".squish,
-      :unit_amount_in_cents => { 'USD' => 34_00 },
+      :unit_amount_in_cents => { 'USD' => 34_00, 'EUR' => 0 },
       :setup_fee_in_cents   => { 'USD' => 0, 'EUR' => 0 },
       :plan_interval_length => 1,
       :plan_interval_unit   => 'months',
@@ -84,7 +84,7 @@ class Orphan < ActiveRecord::Base
     plan ||= Recurly::Plan.create(
       :plan_code            => medium_plan_id,
       :name                 => "Sponsorship for #{first_name} #{last_name}".squish,
-      :unit_amount_in_cents => { 'USD' => 68_00 },
+      :unit_amount_in_cents => { 'USD' => 68_00, 'EUR' => 0 },
       :setup_fee_in_cents   => { 'USD' => 0, 'EUR' => 0 },
       :plan_interval_length => 1,
       :plan_interval_unit   => 'months',
@@ -100,7 +100,7 @@ class Orphan < ActiveRecord::Base
     plan ||= Recurly::Plan.create(
       :plan_code            => maximum_plan_id,
       :name                 => "Sponsorship for #{first_name} #{last_name}".squish,
-      :unit_amount_in_cents => { 'USD' => 200_00 },
+      :unit_amount_in_cents => { 'USD' => 200_00, 'EUR' => 0 },
       :setup_fee_in_cents   => { 'USD' => 0, 'EUR' => 0 },
       :plan_interval_length => 1,
       :plan_interval_unit   => 'months',
