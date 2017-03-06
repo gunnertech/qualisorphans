@@ -31,7 +31,10 @@ class Subscription < ActiveRecord::Base
   end
   
   def cancel_subscription
-    subscription = Recurly::Subscription.find(uuid)
-    subscription.terminate :none    
+    begin
+      subscription = Recurly::Subscription.find(uuid)
+      subscription.terminate :none    
+    rescue
+    end
   end
 end
